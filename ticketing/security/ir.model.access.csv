@@ -1,0 +1,5 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_event_user,access_event_user,model_ticketing_event,base.group_user,True,True,True,True
+access_client_user,access_client_user,model_ticketing_client,base.group_user,True,True,True,True
+access_reservation_user,access_reservation_user,model_ticketing_reservation,base.group_user,True,True,True,True
+access_ticket_user,access_ticket_user,model_ticketing_ticket,base.group_user,True,True,True,True

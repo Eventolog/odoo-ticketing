@@ -1,0 +1,189 @@
+<odoo>
+	<!-- MENÚ PRINCIPAL -->
+	<menuitem id="menu_ticketing_root" name="Ticketing" sequence="10"/>
+
+	<!-- ACCIONS I MENÚS PER A CLIENTS -->
+	<record id="action_client" model="ir.actions.act_window">
+    	<field name="name">Clients</field>
+    	<field name="res_model">ticketing.client</field>
+    	<field name="view_mode">tree,form</field>
+	</record>
+
+	<menuitem id="menu_ticketing_clients" name="Clients" parent="menu_ticketing_root" action="action_client"/>
+
+	<record id="view_client_form" model="ir.ui.view">
+    	<field name="name">ticketing.client.form</field>
+    	<field name="model">ticketing.client</field>
+    	<field name="arch" type="xml">
+        	<form string="Client">
+            	<sheet>
+                	<group>
+                    	<field name="name"/>
+                    	<field name="surname"/>
+                    	<field name="phone"/>
+                    	<field name="address"/>
+                    	<field name="email"/>
+                	</group>
+                	<notebook>
+                    	<page string="Reservations">
+                        	<field name="reservation_ids" widget="one2many_list"/>
+                    	</page>
+                    	<page string="Tickets">
+                        	<field name="ticket_ids" widget="one2many_list"/>
+                    	</page>
+                	</notebook>
+            	</sheet>
+        	</form>
+    	</field>
+	</record>
+
+	<record id="view_client_tree" model="ir.ui.view">
+    	<field name="name">ticketing.client.tree</field>
+    	<field name="model">ticketing.client</field>
+    	<field name="arch" type="xml">
+        	<tree string="Clients">
+            	<field name="name"/>
+            	<field name="surname"/>
+            	<field name="email"/>
+        	</tree>
+    	</field>
+	</record>
+
+	<!-- ACCIONS I MENÚS PER A ESDEVENIMENTS -->
+		<record model="ir.ui.view" id="ticketing.event_calendar">
+		<field name="name">Event Calendar</field>
+		<field name="model">ticketing.event</field>
+		<field name="arch" type="xml">
+			<calendar string="Event Calendar" date_start="date" mode="week">
+				<field name="name"/>
+				<field name="description"/>
+				<field name="location"/>
+				<field name="available_tickets" />
+				<field name="taken_tickets"/>
+				<field name="price"/>
+			</calendar>
+		</field>
+	</record>
+
+	<record id="action_event" model="ir.actions.act_window">
+    	<field name="name">Events</field>
+    	<field name="res_model">ticketing.event</field>
+    	<field name="view_mode">tree,form,calendar</field>
+	</record>
+
+	<menuitem id="menu_ticketing_events" name="Events" parent="menu_ticketing_root" action="action_event"/>
+
+	<record id="view_event_form" model="ir.ui.view">
+    	<field name="name">ticketing.event.form</field>
+    	<field name="model">ticketing.event</field>
+    	<field name="arch" type="xml">
+        	<form string="Event">
+            	<sheet>
+                	<group>
+                        <field name="name"/>
+                    	<field name="description"/>
+						<field name="available_tickets" />
+                    	<field name="date"/>
+                    	<field name="time"/>
+                    	<field name="location"/>
+                    	<field name="price"/>
+                	</group>
+            	</sheet>
+        	</form>
+    	</field>
+	</record>
+
+	<record id="view_event_tree" model="ir.ui.view">
+    	<field name="name">ticketing.event.tree</field>
+    	<field name="model">ticketing.event</field>
+    	<field name="arch" type="xml">
+        	<tree string="Events">
+                <field name="name"/>
+            	<field name="date"/>
+				<field name="available_tickets" />
+				<field name="taken_tickets"/>
+            	<field name="location"/>
+            	<field name="price"/>
+        	</tree>
+    	</field>
+	</record>
+
+
+
+	<!-- ACCIONS I MENÚS PER A RESERVES -->
+	<record id="action_reservation" model="ir.actions.act_window">
+    	<field name="name">Reservations</field>
+    	<field name="res_model">ticketing.reservation</field>
+    	<field name="view_mode">tree,form</field>
+	</record>
+
+	<menuitem id="menu_ticketing_reservations" name="Reservations" parent="menu_ticketing_root" action="action_reservation"/>
+
+	<record id="view_reservation_form" model="ir.ui.view">
+    	<field name="name">ticketing.reservation.form</field>
+    	<field name="model">ticketing.reservation</field>
+    	<field name="arch" type="xml">
+        	<form string="Reservation">
+            	<sheet>
+                	<group>
+                    	<field name="client_id" options="{'no_create': True}"/>
+                    	<field name="event_id" options="{'no_create': True}"/>
+                	</group>
+            	</sheet>
+        	</form>
+    	</field>
+	</record>
+
+	<record id="view_reservation_tree" model="ir.ui.view">
+    	<field name="name">ticketing.reservation.tree</field>
+    	<field name="model">ticketing.reservation</field>
+    	<field name="arch" type="xml">
+        	<tree string="Reservations">
+            	<field name="client_id"/>
+            	<field name="event_id"/>
+        	</tree>
+    	</field>
+	</record>
+
+	<!-- ACCIONS I MENÚS PER A TICKETS -->
+	<record id="action_ticket" model="ir.actions.act_window">
+    	<field name="name">Tickets</field>
+    	<field name="res_model">ticketing.ticket</field>
+    	<field name="view_mode">tree,form</field>
+	</record>
+
+	<menuitem id="menu_ticketing_tickets" name="Tickets" parent="menu_ticketing_root" action="action_ticket"/>
+
+	<record id="view_ticket_form" model="ir.ui.view">
+    	<field name="name">ticketing.ticket.form</field>
+    	<field name="model">ticketing.ticket</field>
+    	<field name="arch" type="xml">
+        	<form string="Ticket">
+            	<sheet>
+                	<group>
+                    	<field name="reservation_id"  options="{'no_create': True}"/>
+                    	<field name="employee_id" options="{'no_create': True}"/>
+                    	<field name="type"/>
+						<field name="description" />
+                    	<field name="state"/>
+                	</group>
+            	</sheet>
+        	</form>
+    	</field>
+	</record>
+
+	<record id="view_ticket_tree" model="ir.ui.view">
+    	<field name="name">ticketing.ticket.tree</field>
+    	<field name="model">ticketing.ticket</field>
+    	<field name="arch" type="xml">
+        	<tree string="Tickets">
+            	<field name="reservation_id"/>
+            	<field name="employee_id"/>
+            	<field name="type"/>
+				<field name="description" />
+            	<field name="state"/>
+        	</tree>
+    	</field>
+	</record>
+
+</odoo>
